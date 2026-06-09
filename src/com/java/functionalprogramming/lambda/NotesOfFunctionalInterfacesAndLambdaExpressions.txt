@@ -1,0 +1,45 @@
+whenever i want to use reference method for lambda expression i need functional interfaces?
+->
+whenever you want to use a method reference in place of a lambda expression, it must be tied to a functional interface.
+
+> A lambda or method reference is not a value like String or int.
+> It’s a piece of executable code that can only be represented in Java by a functional interface
+    (an interface with a single abstract method).
+> The compiler matches the method reference to the signature of that abstract method.
+
+<code>
+Employee employee1 = new Employee();
+// Functional interface Supplier<String> has one abstract method: get()
+Supplier<String> supplier = employee1::toString;
+// Now you can call it
+String example = supplier.get();
+</code>
+
+Here, employee1::toString matches Supplier<String> because:
+toString() takes no arguments
+Supplier.get() takes no arguments
+Both return a String
+
+Without functional interface → not possible
+String example = employee1::toString;  // ❌ Compile error
+Because String is not a functional interface. You can’t assign a method reference directly to a String.
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+Functional Interface | Abstract Method     | Example Method Reference | Equivalent Lambda           |
+---------------------|---------------------|--------------------------|-----------------------------|
+Supplier<T>          | T get()             | employee::toString       | () -> employee.toString()   |
+Consumer<T>          | void accept(T)      | System.out::println      | x -> System.out.println(x)  |
+Function<T,R>        | R apply(T)          | String::length           | s -> s.length()             |
+Predicate<T>         | boolean test(T)     | Objects::isNull          | x -> Objects.isNull(x)      |
+BiFunction<T,U,R>    | R apply(T,U)        | Math::pow                | (a,b) -> Math.pow(a,b)      |
+BiConsumer<T,U>      | void accept(T,U)    | Map::put                 | (k,v) -> map.put(k,v)       |
+UnaryOperator<T>     | T apply(T)          | String::toUpperCase      | s -> s.toUpperCase()        |
+BinaryOperator<T>    | T apply(T,T)        | Integer::sum             | (a,b) -> Integer.sum(a,b)   |
+----------------------------------------------------------------------------------------------------
+T -> type of input argument
+U -> second input argument
+R -> return type of method
