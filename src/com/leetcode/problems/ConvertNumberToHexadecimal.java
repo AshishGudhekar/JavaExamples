@@ -25,7 +25,8 @@ Constraints:
 public class ConvertNumberToHexadecimal {
 
     static void main(String[] args) {
-        String op = toHex(123);
+        System.out.println(15 & 15);
+        String op = toHex(15);
         System.out.println(op);
     }
 

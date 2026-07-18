@@ -41,22 +41,33 @@ All the words in s are separated by a single space.
 public class WordPattern {
 
     static void main(String[] args) {
-
+        System.out.println(wordPattern("assp", "cat dog cat parrot"));
     }
 
     public static boolean wordPattern(String pattern, String s) {
-        String[] spl = pattern.split(" ");
-        Map<String, String> map = new HashMap<>();
-
-        if (s.length() != spl.length) {
+        String[] words = s.split(" ");
+        if (words.length != pattern.length()) {
             return false;
         }
-        for (int i = 0; i < spl.length; i++) {
-            map.put(spl[i], s.charAt(i)+"");
-        }
 
-        for (int i = 0; i < spl.length; i++) {
-            if (map.get(spl[i]))
+        HashMap<Character, String> pToS = new HashMap<>();
+        HashMap<String, Character> sToP = new HashMap<>();
+
+        for (int i = 0; i < pattern.length(); i++) {
+            char p = pattern.charAt(i);
+            String word = words[i];
+
+            if (pToS.containsKey(p)) {
+                if (!pToS.get(p).equals(word))
+                    return false;
+            } else if (sToP.containsKey(word)) {
+                if (sToP.get(word) != p)
+                    return false;
+            } else {
+                pToS.put(p, word);
+                sToP.put(word, p);
+            }
         }
+        return true;
     }
 }
