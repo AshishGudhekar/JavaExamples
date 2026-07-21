@@ -1,0 +1,19 @@
+package com.leetcode.problems;
+
+public class ClimbingStairs {
+    static void main(String[] args) {
+        climbStairs(45);
+    }
+
+    public static int climbStairs(int n) {
+        if (n <= 2) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+        System.out.println(b);
+        return b;
+    }
+}
